@@ -32,9 +32,9 @@ target_size=(227, 227)
 
 
 # Create a function to allow for different training data and other options
-def train_model(image_dir='Train/CameraRGB',
-                label_dir='Train/CameraSeg',
-                job_dir='./tmp/semantic_segmenter', **args):
+def train_model(image_dir='data/data_road/training/image_2',
+                label_dir='data/data_road/training/gt_image_2',
+                job_dir='/tmp/semantic_segmenter', **args):
     # set the logging path for ML Engine logging to Storage bucket
     logs_path = job_dir + '/logs/' + datetime.now().isoformat()
     print('Using logs_path located at {}'.format(logs_path))
@@ -75,9 +75,6 @@ if __name__ == '__main__':
     parser.add_argument(
       '--label-dir',
       help='Cloud Storage bucket or local path to label data')
-    parser.add_argument(
-      '--job-dir',
-      help='Cloud storage bucket to export the model and store temp files')
     args = parser.parse_args()
     arguments = args.__dict__
     train_model(**arguments)

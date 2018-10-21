@@ -8,19 +8,10 @@ def pre_process_image(image):
 
 
 def pre_process_label(label):
-    lbl = (label[:, :, 0]).astype(np.uint8)
-    vehicle_indices = lbl == 10
-    road_indices = lbl == 7
-    roadline_indices = lbl == 6
-    
-    lbl = np.full_like(label, [1, 0, 0])
-    r, c, ch = lbl.shape
-    vehicle_indices[int(3*r/5):,:] = False
-    lbl = np.full_like(label, [1, 0, 0])
-    lbl[vehicle_indices] = [0, 1, 0]
+    lbl = (label[:, :, 2]).astype(np.uint8)
+    road_indices = lbl == 255
+    lbl = np.full_like(label, [0, 0, 0])
     lbl[road_indices] = [0, 0, 1]
-    lbl[roadline_indices] = [0, 0, 1]
-
     return lbl
 
 def create_generators(image_dir='Train/CameraRGB',
